@@ -15,8 +15,8 @@ Start http-slave on slave host:
 Provide example.json response somehow (nginx?) by master host:
 
     {
-        "command": ["/usr/local/sbin/http-slave-chekscript.sh"],
-        "respond_url": "https://youd.domain/response?foo=bar",
+        "command": ["/usr/local/bin/http-slave-chekscript.sh"],
+        "respond_url": "https://your.domain/response?foo=bar",
         "immediately_next": false
     }
 
