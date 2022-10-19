@@ -33,6 +33,7 @@ func GetTask(url string) (*Task, error) {
 		return nil, err
 	}
 	client := http.Client{ Timeout: time.Second * 3	}
+	defer client.CloseIdleConnections()
 	response, err := client.Do(request)
 	if err != nil {
 		ErrorLog.Println(err.Error())
@@ -53,6 +54,7 @@ func GetTask(url string) (*Task, error) {
 		ErrorLog.Println(err.Error())
 		return nil, err
 	}
+	DebugLog.Println(`Got task`, task)
 	return &task, nil
 }
 
@@ -69,6 +71,7 @@ func ExecTask(task *Task) ([]byte, int, time.Duration, error) {
 }
 
 func RespondTask(respondUrl string, data []byte, exitCode int, spent time.Duration) {
+	DebugLog.Println(`Sending response to`, respondUrl)
 	buffer := bytes.NewBuffer(data)
 	request, err := http.NewRequest(http.MethodPost, respondUrl, buffer)
 	if err != nil {
